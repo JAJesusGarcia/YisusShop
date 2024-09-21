@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply flex flex-col min-h-[100vh] bg-quaternary text-tertiary;
+}
+
+footer {
+  @apply mt-auto;
+}
+
+.container {
+  @apply py-0 px-6 max-w-screen-xl my-0 mx-auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-secondary);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+}
+
+h4 {
+  font-size: 1.25rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+input {
+  border: none;
+  outline: none;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+input::placeholder {
+  color: #a0a0a0; /* Placeholder más claro */
+}
+
+input:focus::placeholder {
+  opacity: 0.6; /* Reduce la opacidad del placeholder cuando el campo está enfocado */
+}
+
+/* @keyframes Button {
+  0% {
+    transform: translateX(50%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-slide-left {
+  animation: slide-left 1.5s ease-in-out forwards;
+} */
+
+.animate-tumbleweed {
+  animation: tumbleweed 8s linear infinite;
+}
+
+@keyframes tumbleweed {
+  0% {
+    transform: translateX(100vw) rotate(0deg);
+  }
+  100% {
+    transform: translateX(-100vw) rotate(360deg);
+  }
+}
+
+/* //////////////////////////////////////////////////////////////////////////////////////////////////// */
+
+/* :root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+} */

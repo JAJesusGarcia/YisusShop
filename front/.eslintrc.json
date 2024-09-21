@@ -1,0 +1,20 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "plugins": ["tailwindcss"],
+  "rules": {
+    "no-unused-vars": "off",
+    "tailwindcss/no-custom-classname": "off", // Opcional si manejas muchas clases personalizadas
+    "at-rule-no-unknown": [
+      "error",
+      {
+        "ignoreAtRules": [
+          "tailwind",
+          "apply",
+          "variants",
+          "responsive",
+          "screen"
+        ]
+      }
+    ]
+  }
+}

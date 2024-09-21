@@ -1,0 +1,21 @@
+.hero-background {
+  background-image: url('https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_daniel-korpai-3qELJetpWsU-unsplash.png');
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in {
+  animation: slideInLeft 1s ease-out forwards;
+}
