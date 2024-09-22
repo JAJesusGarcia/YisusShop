@@ -1,12 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import CardList from '../CardList/CardList';
-import { productsShop } from '@/mocks/productsShop';
-import CardProducts from '../CardProducts/CardProducts';
-import { IProduct } from '@/app/interfaces/products';
-import Loading from '@/app/loading';
-import NotFound from '@/app/not-found';
+import { useEffect, useState } from "react";
+import CardList from "../CardList/CardList";
+import { productsShop } from "@/mocks/productsShop";
+import CardProducts from "../CardProducts/CardProducts";
+import { IProduct } from "@/app/interfaces/products";
+import Loading from "@/app/loading";
+import NotFound from "@/app/not-found";
 const ClientProducts = () => {
   const [data, setData] = useState<IProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);

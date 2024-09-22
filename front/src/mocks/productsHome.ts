@@ -1,63 +1,63 @@
-import { IProduct } from '@/app/interfaces/products';
+import { IProduct } from "@/app/interfaces/products";
 
 export const productsHome: IProduct[] = [
   {
     id: 0,
-    name: 'heroimg',
+    name: "heroimg",
     price: 874,
-    description: 'lorem ipsum',
+    description: "lorem ipsum",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_daniel-korpai-3qELJetpWsU-unsplash.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_daniel-korpai-3qELJetpWsU-unsplash.png",
     categoryId: 1,
     stock: 10,
   },
   {
     id: 1,
-    name: 'SPEAKERS',
+    name: "SPEAKERS",
     price: 874,
-    description: 'unsplash',
+    description: "unsplash",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_grant-ritchie-n_wXNttWVGs-unsplash.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_grant-ritchie-n_wXNttWVGs-unsplash.png",
     categoryId: 2,
     stock: 10,
   },
   {
     id: 2,
-    name: 'MUSIC PLAYER',
+    name: "MUSIC PLAYER",
     price: 874,
-    description: 'unsplash',
+    description: "unsplash",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_90-angle-IsIQXkDENBo-unsplash-1.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_90-angle-IsIQXkDENBo-unsplash-1.png",
     categoryId: 3,
     stock: 10,
   },
   {
     id: 3,
-    name: 'CONTROLER',
+    name: "CONTROLER",
     price: 874,
-    description: 'unsplash',
+    description: "unsplash",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_photo-1554213352-5ffe6534af08.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_photo-1554213352-5ffe6534af08.png",
     categoryId: 4,
     stock: 10,
   },
   {
     id: 4,
-    name: 'SMART WATCH',
+    name: "SMART WATCH",
     price: 874,
-    description: 'unsplash',
+    description: "unsplash",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_daniel-korpai-tE_kGhscUTU-unsplash.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_daniel-korpai-tE_kGhscUTU-unsplash.png",
     categoryId: 5,
     stock: 10,
   },
   {
     id: 5,
-    name: 'HEADPHONE',
+    name: "HEADPHONE",
     price: 874,
-    description: 'unsplash',
+    description: "unsplash",
     image:
-      'https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_black-headphones-flatl-lay-9CB58NW.png',
+      "https://demo.phlox.pro/shop-gadget/wp-content/uploads/sites/335/2021/02/op_black-headphones-flatl-lay-9CB58NW.png",
     categoryId: 6,
     stock: 10,
   },

@@ -1,20 +1,20 @@
-import React from 'react';
-import Image from 'next/image';
-import { Users, Target, Sparkles } from 'lucide-react';
+import React from "react";
+import Image from "next/image";
+import { Users, Target, Sparkles } from "lucide-react";
 
 const About = () => {
   return (
     <main className="container">
-      <div className="w-full max-w-6xl mt-10 mb-10 pt-10 bg-secondary/50 rounded-3xl">
-        <div className="flex flex-col md:flex-row gap-10 p-8">
+      <div className="mb-10 mt-10 w-full max-w-6xl rounded-3xl bg-secondary/50 pt-10">
+        <div className="flex flex-col gap-10 p-8 md:flex-row">
           <div className="md:w-1/2">
-            <h1 className="text-4xl font-bold text-quinary mb-6">About Us</h1>
-            <p className="text-primary/90 mb-4">
+            <h1 className="mb-6 text-4xl font-bold text-quinary">About Us</h1>
+            <p className="mb-4 text-primary/90">
               We are a passionate team dedicated to bringing you the best
               products and experiences. Our journey began with a simple idea: to
               make quality accessible to everyone.
             </p>
-            <p className="text-primary/90 mb-4">
+            <p className="mb-4 text-primary/90">
               Today, we continue to innovate and strive for excellence in
               everything we do. Our commitment to quality and customer
               satisfaction remains at the core of our business.
@@ -31,12 +31,12 @@ const About = () => {
           </div>
         </div>
 
-        <div className="bg-secondary mb-10 rounded-xl p-8">
-          <h2 className="text-2xl font-bold text-quinary mb-6">Our Values</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="mb-10 rounded-xl bg-secondary p-8">
+          <h2 className="mb-6 text-2xl font-bold text-quinary">Our Values</h2>
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             <div className="flex flex-col items-center text-center">
-              <Users className="w-12 h-12 text-primary mb-2" />
-              <h3 className="text-xl font-semibold text-quinary mb-2">
+              <Users className="mb-2 h-12 w-12 text-primary" />
+              <h3 className="mb-2 text-xl font-semibold text-quinary">
                 Customer First
               </h3>
               <p className="text-primary/90">
@@ -44,8 +44,8 @@ const About = () => {
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Target className="w-12 h-12 text-primary mb-2" />
-              <h3 className="text-xl font-semibold text-quinary mb-2">
+              <Target className="mb-2 h-12 w-12 text-primary" />
+              <h3 className="mb-2 text-xl font-semibold text-quinary">
                 Quality Focus
               </h3>
               <p className="text-primary/90">
@@ -53,8 +53,8 @@ const About = () => {
               </p>
             </div>
             <div className="flex flex-col items-center text-center">
-              <Sparkles className="w-12 h-12 text-primary mb-2" />
-              <h3 className="text-xl font-semibold text-quinary mb-2">
+              <Sparkles className="mb-2 h-12 w-12 text-primary" />
+              <h3 className="mb-2 text-xl font-semibold text-quinary">
                 Continuous Innovation
               </h3>
               <p className="text-primary/90">

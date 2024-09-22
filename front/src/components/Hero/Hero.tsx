@@ -1,8 +1,8 @@
-'use client';
-import Button from '../Button/Button';
-import { useContext, useEffect, useState } from 'react';
-import style from './Hero.module.css';
-import { AuthContext } from '@/context/authContext';
+"use client";
+import Button from "../Button/Button";
+import { useContext, useEffect, useState } from "react";
+import style from "./Hero.module.css";
+import { AuthContext } from "@/context/authContext";
 
 const Hero = () => {
   const { user } = useContext(AuthContext);
@@ -16,26 +16,26 @@ const Hero = () => {
 
   // Función para obtener el mensaje de bienvenida
   const getWelcomeMessage = () => {
-    console.log('Current user state:', user); // Debug log
+    console.log("Current user state:", user); // Debug log
     if (user && user.user && user.user.name) {
       return `Welcome to my online shop, ${user.user.name}!`;
     }
-    return 'Welcome to my online shop!';
+    return "Welcome to my online shop!";
   };
 
   useEffect(() => {
-    console.log('Hero component mounted. User:', user); // Debug log
+    console.log("Hero component mounted. User:", user); // Debug log
   }, [user]);
 
   return (
     <header
-      className={`h-[70vh] bg-secondary flex flex-col justify-center items-center relative ${style['hero-background']}`}
+      className={`relative flex h-[70vh] flex-col items-center justify-center bg-secondary ${style["hero-background"]}`}
     >
       <div className="absolute inset-0 bg-black opacity-50"></div>
 
       <h4
-        className={`text-6xl text-center text-quinary relative z-10 ${
-          isAnimated ? style['animate-slide-in'] : ''
+        className={`relative z-10 text-center text-6xl text-quinary ${
+          isAnimated ? style["animate-slide-in"] : ""
         }`}
       >
         {getWelcomeMessage()}
@@ -47,10 +47,10 @@ const Hero = () => {
       </div> */}
 
       <Button
-        className={`mt-10 text-secondary bg-primary border-primary font-bold hover:bg-secondary hover:text-primary hover:border-primary relative z-10 ${
-          isAnimated ? style['animate-slide-in'] : ''
+        className={`relative z-10 mt-10 border-primary bg-primary font-bold text-secondary hover:border-primary hover:bg-secondary hover:text-primary ${
+          isAnimated ? style["animate-slide-in"] : ""
         }`}
-        onClick={() => console.log('clicked')}
+        onClick={() => console.log("clicked")}
         href="/products"
       >
         Shop NOW!

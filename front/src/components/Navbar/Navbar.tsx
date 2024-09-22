@@ -1,32 +1,30 @@
-'use client';
+"use client";
 
-import React, { useContext, useState } from 'react';
-import Link from 'next/link';
-import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
-import NavLink from '../NavLinks/NavLink';
-import { navLinks, NavLink as NavLinkInterface } from '../NavLinks/navLinks';
-import UserWidget from '../UserWidget/UserWidget';
-import { AuthContext } from '@/context/authContext';
+import React, { useState } from "react";
+import Link from "next/link";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import NavLink from "../NavLinks/NavLink";
+import { navLinks } from "../NavLinks/navLinks";
+import UserWidget from "../UserWidget/UserWidget";
 
 const Navbar: React.FC = () => {
-  const { user } = useContext(AuthContext);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav className="bg-quaternary h-navbar relative">
+    <nav className="relative h-navbar bg-quaternary">
       <div className="container mx-auto px-4">
-        <div className="flex justify-between items-center h-full py-2">
-          <Link href="/" className="text-quinary text-xl font-bold">
+        <div className="flex h-full items-center justify-between py-2">
+          <Link href="/" className="text-xl font-bold text-quinary">
             Yisus
             <span className="text-tertiary">
               Shop<span className="text-primary/70">!</span>
             </span>
           </Link>
 
-          <div className="flex items-center gap-7 flex-grow justify-end lg:justify-between">
-            <div className="hidden lg:flex gap-7 flex-grow justify-center">
+          <div className="flex grow items-center justify-end gap-7 lg:justify-between">
+            <div className="hidden grow justify-center gap-7 lg:flex">
               {navLinks.map((link) => (
                 <NavLink key={link.href} href={link.href}>
                   {link.label}
@@ -40,13 +38,13 @@ const Navbar: React.FC = () => {
               {menuOpen ? (
                 <AiOutlineClose
                   size={24}
-                  className="text-primary cursor-pointer"
+                  className="cursor-pointer text-primary"
                   onClick={toggleMenu}
                 />
               ) : (
                 <AiOutlineMenu
                   size={24}
-                  className="text-tertiary cursor-pointer"
+                  className="cursor-pointer text-tertiary"
                   onClick={toggleMenu}
                 />
               )}
@@ -55,8 +53,8 @@ const Navbar: React.FC = () => {
         </div>
 
         {menuOpen && (
-          <div className="lg:hidden absolute top-full left-0 right-0 bg-quaternary shadow-md z-50 ">
-            <div className="flex flex-col gap-4 py-4 px-4 items-center text-center">
+          <div className="absolute left-0 right-0 top-full z-50 bg-quaternary shadow-md lg:hidden">
+            <div className="flex flex-col items-center gap-4 px-4 py-4 text-center">
               {navLinks.map((link) => (
                 <NavLink key={link.href} href={link.href} onClick={toggleMenu}>
                   {link.label}

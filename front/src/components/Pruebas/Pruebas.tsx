@@ -1,28 +1,28 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TestPage = () => {
   useEffect(() => {
-    gsap.to('.scroll-image', {
+    gsap.to(".scroll-image", {
       scrollTrigger: {
-        trigger: '.scroll-image',
-        start: 'top 80%',
-        end: 'bottom 20%',
+        trigger: ".scroll-image",
+        start: "top 80%",
+        end: "bottom 20%",
         scrub: true,
       },
       rotation: 360,
-      ease: 'none',
+      ease: "none",
     });
   }, []);
 
   return (
-    <div className="h-screen flex items-center justify-center">
-      <div className="scroll-image w-64 h-64 bg-blue-500"></div>
+    <div className="flex h-screen items-center justify-center">
+      <div className="scroll-image h-64 w-64 bg-blue-500"></div>
     </div>
   );
 };

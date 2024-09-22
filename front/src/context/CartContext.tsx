@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import React, { createContext, useState, useEffect, useContext } from 'react';
-import { IProduct } from '@/app/interfaces/products';
-import { AuthContext } from './authContext';
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { IProduct } from "@/app/interfaces/products";
+import { AuthContext } from "./authContext";
 
 interface CartContextProps {
   cart: IProduct[];
@@ -26,7 +26,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     if (user) {
-      const savedCart = localStorage.getItem('cart');
+      const savedCart = localStorage.getItem("cart");
       if (savedCart) {
         setCart(JSON.parse(savedCart));
       }
@@ -38,18 +38,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({
   const addToCart = (product: IProduct) => {
     const updatedCart = [...cart, product];
     setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   const removeFromCart = (productId: number) => {
     const updatedCart = cart.filter((product) => product.id !== productId);
     setCart(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem('cart');
+    localStorage.removeItem("cart");
   };
 
   return (

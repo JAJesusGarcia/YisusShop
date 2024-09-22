@@ -1,7 +1,7 @@
-import { IProduct } from '@/app/interfaces/products';
-import { Heart } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
+import { IProduct } from "@/app/interfaces/products";
+import { Heart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
 interface ProductProps {
   product: IProduct;
@@ -9,38 +9,38 @@ interface ProductProps {
 
 const CardProducts = ({ product }: ProductProps) => {
   return (
-    <div className="bg-secondary rounded-xl overflow-hidden flex flex-col h-full transition-all duration-900 ease-in-out transform hover:shadow-2xl hover:scale-105 group relative">
+    <div className="duration-900 group relative flex h-full transform flex-col overflow-hidden rounded-xl bg-secondary transition-all ease-in-out hover:scale-105 hover:shadow-2xl">
       <Link
-        className="flex-grow flex flex-col relative"
+        className="relative flex grow flex-col"
         href={`/products/${product.id}`}
       >
-        <div className="relative pt-[100%] w-full">
+        <div className="relative w-full pt-[100%]">
           <Image
             src={product.image}
             alt={product.name}
             layout="fill"
             objectFit="cover"
-            className="absolute top-0 left-0 opacity-10 group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
+            className="absolute left-0 top-0 opacity-10 transition-opacity duration-300 ease-in-out group-hover:opacity-100"
           />
-          <div className="absolute top-2 left-2 text-quinary text-sm px-2 py-1 rounded">
+          <div className="absolute left-2 top-2 rounded px-2 py-1 text-sm text-quinary">
             US$ {product.price}
           </div>
           <Link href="/favorites">
-            <button className="absolute top-2 right-2 text-tertiary hover:text-pink-400 transition-colors duration-300">
+            <button className="absolute right-2 top-2 text-tertiary transition-colors duration-300 hover:text-pink-400">
               <Heart size={24} />
             </button>
           </Link>
         </div>
       </Link>
-      <div className="p-4 bg-tertiary transition-all duration-300 group-hover:bg-primary relative">
-        <div className="group-hover:opacity-0 group-hover:invisible transition-all duration-300">
-          <h2 className="text-2xl text-quinary truncate">{product.name}</h2>
+      <div className="relative bg-tertiary p-4 transition-all duration-300 group-hover:bg-primary">
+        <div className="transition-all duration-300 group-hover:invisible group-hover:opacity-0">
+          <h2 className="truncate text-2xl text-quinary">{product.name}</h2>
         </div>
         <Link
           href={`/products/${product.id}`}
-          className="absolute inset-0 flex items-center justify-center opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300"
+          className="invisible absolute inset-0 flex items-center justify-center opacity-0 transition-all duration-300 group-hover:visible group-hover:opacity-100"
         >
-          <span className="bg-primary text-secondary py-2 px-4 font-bold hover:text-secondary transition-colors duration-300">
+          <span className="bg-primary px-4 py-2 font-bold text-secondary transition-colors duration-300 hover:text-secondary">
             ADD TO CART
           </span>
         </Link>

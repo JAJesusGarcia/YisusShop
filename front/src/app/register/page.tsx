@@ -1,8 +1,8 @@
-import RegisterForm from '@/components/RegisterForm/RegisterForm';
+import RegisterForm from "@/components/RegisterForm/RegisterForm";
 
 const register = () => {
   return (
-    <main className="container ">
+    <main className="container">
       <RegisterForm />
     </main>
   );

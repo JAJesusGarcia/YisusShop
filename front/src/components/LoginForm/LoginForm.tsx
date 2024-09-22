@@ -1,15 +1,15 @@
-'use client';
-import { useContext, useEffect, useState } from 'react';
-import Button from '../Button/Button';
-import { validateEmail, validatePassword } from '../../helpers/validation';
-import Link from 'next/link';
-import { ILoginForm as Data } from '../../interfaces/forms';
-import { loginService } from '@/services/authServices';
-import { useRouter } from 'next/navigation';
-import { AuthContext } from '@/context/authContext';
-import Loading from '@/app/loading';
-import Swal from 'sweetalert2';
-import withReactContent from 'sweetalert2-react-content';
+"use client";
+import { useContext, useEffect, useState } from "react";
+import Button from "../Button/Button";
+import { validateEmail, validatePassword } from "../../helpers/validation";
+import Link from "next/link";
+import { ILoginForm as Data } from "../../interfaces/forms";
+import { loginService } from "@/services/authServices";
+import { useRouter } from "next/navigation";
+import { AuthContext } from "@/context/authContext";
+import Loading from "@/app/loading";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
@@ -17,7 +17,7 @@ const LoginForm = () => {
   const { setUser } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const initialData: Data = { email: '', password: '' };
+  const initialData: Data = { email: "", password: "" };
   const initialDirty = { email: false, password: false };
 
   const [data, setData] = useState(initialData);
@@ -27,12 +27,12 @@ const LoginForm = () => {
   const handleSubmit = async () => {
     setIsLoading(true); // Inicia el estado de carga
     const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await loginService(apiUrl + '/users/login', data);
+    const response = await loginService(apiUrl + "/users/login", data);
 
     if (response.login) {
       MySwal.fire({
         title: <p>Login Successful!</p>,
-        icon: 'success',
+        icon: "success",
         // didOpen: () => {
         //   MySwal.showLoading();
         //   setTimeout(() => {
@@ -46,7 +46,7 @@ const LoginForm = () => {
       // alert('User or Credentials Wrong!');
       MySwal.fire({
         title: <p>User or Credentials Wrong!</p>,
-        icon: 'error',
+        icon: "error",
       });
       setIsLoading(false); // Desactiva el estado de carga si hay un error
     }
@@ -88,11 +88,11 @@ const LoginForm = () => {
         e.preventDefault();
         handleSubmit();
       }}
-      className="flex flex-col w-full max-w-md mx-auto pt-8 gap-6 mt-20 mb-20 border border-primary/80 rounded-3xl shadow-lg bg-secondary/50 p-8"
+      className="mx-auto mb-20 mt-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 pt-8 shadow-lg"
     >
       <label
         htmlFor="email"
-        className="block text-lg text-quinary font-semibold"
+        className="block text-lg font-semibold text-quinary"
       >
         Email
       </label>
@@ -104,14 +104,14 @@ const LoginForm = () => {
         value={data.email}
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`block bg-primary/10 text-primary p-3 rounded-md ${
-          errors.email ? 'border-red-500' : 'border-transparent'
+        className={`block rounded-md bg-primary/10 p-3 text-primary ${
+          errors.email ? "border-red-500" : "border-transparent"
         }`}
       />
       {dirty.email ? <p className="text-red-500">{errors.email}</p> : null}
       <label
         htmlFor="password"
-        className="block text-lg text-quinary font-semibold"
+        className="block text-lg font-semibold text-quinary"
       >
         Password
       </label>
@@ -123,22 +123,22 @@ const LoginForm = () => {
         value={data.password}
         onChange={handleChange}
         onBlur={handleBlur}
-        className={`block bg-primary/10 text-primary p-3 rounded-md ${
-          errors.password ? 'border-red-500' : 'border-transparent'
+        className={`block rounded-md bg-primary/10 p-3 text-primary ${
+          errors.password ? "border-red-500" : "border-transparent"
         }`}
       />
       {dirty.password ? (
         <p className="text-red-500">{errors.password}</p>
       ) : null}
       <Button
-        className="mt-6 w-full py-3 text-white bg-primary hover:bg-secondary hover:border-primary hover:text-primary transition-all duration-300 font-bold rounded-md shadow-md hover:shadow-lg"
+        className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
         onClick={handleSubmit}
       >
         Login
       </Button>
       <Link
-        className="mt-4 text-center text-sm text-primary hover:text-secondary transition-colors duration-300"
+        className="mt-4 text-center text-sm text-primary transition-colors duration-300 hover:text-secondary"
         href="/register"
       >
         Don't have an account?

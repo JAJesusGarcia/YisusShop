@@ -1,8 +1,8 @@
-'use client';
-import React, { useState, useEffect } from 'react';
+"use client";
+import React, { useState, useEffect } from "react";
 
 export default function NotFound() {
-  const [glitchText, setGlitchText] = useState('404');
+  const [glitchText, setGlitchText] = useState("404");
   const [isGlitching, setIsGlitching] = useState(false);
 
   useEffect(() => {
@@ -16,29 +16,29 @@ export default function NotFound() {
 
   useEffect(() => {
     if (isGlitching) {
-      const chars = '01!@#$%^&*()_+-={}[]|;:,.<>?';
-      const newText = '404'
-        .split('')
+      const chars = "01!@#$%^&*()_+-={}[]|;:,.<>?";
+      const newText = "404"
+        .split("")
         .map(() => chars[Math.floor(Math.random() * chars.length)])
-        .join('');
+        .join("");
       setGlitchText(newText);
     } else {
-      setGlitchText('404');
+      setGlitchText("404");
     }
   }, [isGlitching]);
 
   return (
-    <div className="h-screen w-full bg-black text-green-500 flex flex-col items-center justify-center overflow-hidden relative font-mono">
+    <div className="relative flex h-screen w-full flex-col items-center justify-center overflow-hidden bg-black font-mono text-green-500">
       {/* Matrix rain background */}
       <div className="absolute inset-0 overflow-hidden opacity-20">
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute top-0 text-xs animate-matrix-rain"
+            className="animate-matrix-rain absolute top-0 text-xs"
             style={{ left: `${i * 10}%`, animationDelay: `${i * 0.1}s` }}
           >
             {[...Array(100)].map((_, j) => (
-              <div key={j}>{Math.random() > 0.5 ? '1' : '0'}</div>
+              <div key={j}>{Math.random() > 0.5 ? "1" : "0"}</div>
             ))}
           </div>
         ))}
@@ -46,18 +46,18 @@ export default function NotFound() {
 
       {/* Glitch effect */}
       <h1
-        className={`text-8xl font-bold mb-8 relative ${isGlitching ? 'animate-glitch' : ''}`}
+        className={`relative mb-8 text-8xl font-bold ${isGlitching ? "animate-glitch" : ""}`}
       >
-        <span className="absolute top-0 left-0 -ml-2 text-red-500 opacity-70">
+        <span className="absolute left-0 top-0 -ml-2 text-red-500 opacity-70">
           {glitchText}
         </span>
-        <span className="absolute top-0 left-0 ml-2 text-blue-500 opacity-70">
+        <span className="absolute left-0 top-0 ml-2 text-blue-500 opacity-70">
           {glitchText}
         </span>
         {glitchText}
       </h1>
 
-      <p className="text-2xl mb-8 text-center">
+      <p className="mb-8 text-center text-2xl">
         Reality not found.
         <br />
         The system cannot locate the path specified.
@@ -65,10 +65,10 @@ export default function NotFound() {
 
       <a
         href="/"
-        className="px-6 py-3 bg-green-500 text-black rounded hover:bg-green-400 transition-colors relative overflow-hidden group"
+        className="group relative overflow-hidden rounded bg-green-500 px-6 py-3 text-black transition-colors hover:bg-green-400"
       >
         <span className="relative z-10">Return to Reality</span>
-        <span className="absolute inset-0 bg-white opacity-0 group-hover:opacity-20 transition-opacity"></span>
+        <span className="absolute inset-0 bg-white opacity-0 transition-opacity group-hover:opacity-20"></span>
       </a>
 
       <style jsx>{`

@@ -1,10 +1,10 @@
-import { ILoginForm, IRegisterForm } from '@/interfaces/forms';
+import { ILoginForm, IRegisterForm } from "@/interfaces/forms";
 
 export const loginService = async (url: string, data: ILoginForm) => {
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });
@@ -14,9 +14,9 @@ export const loginService = async (url: string, data: ILoginForm) => {
 
 export const registerService = async (url: string, data: IRegisterForm) => {
   const response = await fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
   });

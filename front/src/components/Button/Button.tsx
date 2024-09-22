@@ -1,27 +1,27 @@
-import Link from 'next/link';
-import { ButtonHTMLAttributes } from 'react';
+import Link from "next/link";
+import { ButtonHTMLAttributes } from "react";
 
 interface IButton {
   children: React.ReactNode;
   className?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: "primary" | "secondary";
   onClick?: () => void;
   href?: string;
-  type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
+  type?: ButtonHTMLAttributes<HTMLButtonElement>["type"];
 }
 
 const Button = ({
   children,
-  className = '',
-  variant = 'primary',
+  className = "",
+  variant = "primary",
   onClick,
-  href = '',
+  href = "",
 }: //type,
 IButton) => {
   return (
     <Link href={href}>
       <button
-        className={`bg-${variant} ${className} py-2 px-4 border-2 rounded transition-all hover:scale-105 duration-300 active:scale-100`}
+        className={`bg-${variant} ${className} rounded border-2 px-4 py-2 transition-all duration-300 hover:scale-105 active:scale-100`}
         onClick={onClick}
       >
         {children}

@@ -1,13 +1,13 @@
-import { Github, Linkedin } from 'lucide-react';
-import Link from 'next/link';
-import { AiFillInstagram } from 'react-icons/ai';
+import { Github, Linkedin } from "lucide-react";
+import Link from "next/link";
+import { AiFillInstagram } from "react-icons/ai";
 
 const SubFooter = () => {
   return (
-    <div className="bg-secondary pt-20 pb-20 p-4 mt-10">
-      <div className="flex flex-wrap lg:flex-wrap gap-8 max-w-screen-xl mx-auto">
-        <div className="flex-1 min-w-[250px] bg-secondary p-4 rounded-md order-first lg:order-none">
-          <Link href="/" className="text-quinary text-xl font-bold">
+    <div className="mt-10 bg-secondary p-4 pb-20 pt-20">
+      <div className="mx-auto flex max-w-screen-xl flex-wrap gap-8 lg:flex-wrap">
+        <div className="order-first min-w-[250px] flex-1 rounded-md bg-secondary p-4 lg:order-none">
+          <Link href="/" className="text-xl font-bold text-quinary">
             Yisus
             <span className="text-tertiary">
               Shop<span className="text-primary/70">!</span>
@@ -24,62 +24,62 @@ const SubFooter = () => {
             <a
               href="https://github.com/JAJesusGarcia"
               target="_blank"
-              className="text-gray-600 hover:text-primary transition-colors duration-300"
+              className="text-gray-600 transition-colors duration-300 hover:text-primary"
             >
               <Github size={24} />
             </a>
             <a
               href="https://www.linkedin.com/in/jesusjagarcia/"
               target="_blank"
-              className="text-gray-600 hover:text-primary transition-colors duration-300"
+              className="text-gray-600 transition-colors duration-300 hover:text-primary"
             >
               <Linkedin size={24} />
             </a>
             <a
               href="https://www.instagram.com/synergy2devs/"
               target="_blank"
-              className="text-gray-600 hover:text-primary transition-colors duration-300"
+              className="text-gray-600 transition-colors duration-300 hover:text-primary"
             >
               <AiFillInstagram size={24} />
             </a>
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-around gap-5 lg:flex-nowrap lg:flex-1">
+        <div className="flex flex-wrap justify-around gap-5 lg:flex-1 lg:flex-nowrap">
           {[
             {
-              title: 'Useful Links',
+              title: "Useful Links",
               links: [
-                'How it works',
-                'Cancellations',
-                'Getting Started',
-                'Photo Gallery',
+                "How it works",
+                "Cancellations",
+                "Getting Started",
+                "Photo Gallery",
               ],
             },
             {
-              title: 'Title...',
+              title: "Title...",
               links: [
-                'Adventures',
-                'Expert Interview',
-                'Remodeling',
-                'Roofing',
+                "Adventures",
+                "Expert Interview",
+                "Remodeling",
+                "Roofing",
               ],
             },
             {
-              title: 'Our Services',
+              title: "Our Services",
               links: [
-                'Automotive Parts & System',
-                'Power & Energy',
-                'Aero Space',
-                'Ship Building Industry',
+                "Automotive Parts & System",
+                "Power & Energy",
+                "Aero Space",
+                "Ship Building Industry",
               ],
             },
           ].map((section, index) => (
             <div
               key={index}
-              className="flex-1 min-w-[200px] max-w-[200px] bg-secondary p-4 rounded-md"
+              className="min-w-[200px] max-w-[200px] flex-1 rounded-md bg-secondary p-4"
             >
-              <h3 className="font-bold text-lg text-quinary mb-2">
+              <h3 className="mb-2 text-lg font-bold text-quinary">
                 {section.title}
               </h3>
               <div className="flex flex-col space-y-2">
@@ -88,7 +88,7 @@ const SubFooter = () => {
                     <a
                       key={linkIndex}
                       href="#"
-                      className="text-tertiary hover:text-primary hover:rounded-md text-center transition-colors duration-300"
+                      className="text-center text-tertiary transition-colors duration-300 hover:rounded-md hover:text-primary"
                     >
                       {link}
                     </a>
@@ -97,8 +97,8 @@ const SubFooter = () => {
               </div>
             </div>
           ))}
-          <div className="flex-1 text-center min-w-[200px] max-w-[200px] bg-secondary p-4 rounded-md">
-            <h3 className="font-bold text-lg text-quinary">Newsletter</h3>
+          <div className="min-w-[200px] max-w-[200px] flex-1 rounded-md bg-secondary p-4 text-center">
+            <h3 className="text-lg font-bold text-quinary">Newsletter</h3>
             <p className="text-center text-tertiary">
               But I must explain to you how all this mistaken idea of denouncing
               pleasure and praising pain was born and I will give you a complete

@@ -1,22 +1,22 @@
-'use client';
-import * as framerMotion from 'framer-motion';
+"use client";
+import * as framerMotion from "framer-motion";
 
 const Loading = () => {
   return (
-    <div className="fixed top-0 left-0 w-screen h-screen flex items-center justify-center bg-black bg-opacity-75 z-50">
+    <div className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black bg-opacity-75">
       <framerMotion.motion.div
         className="flex items-center"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, ease: 'easeInOut' }}
+        transition={{ duration: 0.6, ease: "easeInOut" }}
       >
         <div className="mr-4">
-          <div className="w-10 h-10 bg-gray-300 rounded-full animate-bounce" />
-          <div className="w-6 h-6 bg-gray-300 rounded-full mt-2 animate-bounce" />
+          <div className="size-10 animate-bounce rounded-full bg-gray-300" />
+          <div className="mt-2 h-6 w-6 animate-bounce rounded-full bg-gray-300" />
         </div>
         <div className="flex flex-col">
-          <div className="text-white text-lg font-semibold">Loading...</div>
-          <div className="text-primary text-lg font-semibold">YisusShop!</div>
+          <div className="text-lg font-semibold text-white">Loading...</div>
+          <div className="text-lg font-semibold text-primary">YisusShop!</div>
         </div>
       </framerMotion.motion.div>
     </div>

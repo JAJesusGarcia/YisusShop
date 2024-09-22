@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { IProduct } from '@/app/interfaces/products';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useEffect, useState, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { IProduct } from "@/app/interfaces/products";
+import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 interface ProductProps {
   product: IProduct;
@@ -27,7 +27,7 @@ const Card = ({ product }: ProductProps) => {
         x: -30,
         y: -20,
         scale: 1.2,
-        ease: 'power1.out',
+        ease: "power1.out",
         duration: 0.5,
       });
     } else {
@@ -36,7 +36,7 @@ const Card = ({ product }: ProductProps) => {
         x: -80, // -20px in rem
         y: -60, // -15px in rem
         scale: 1.2,
-        ease: 'power1.in',
+        ease: "power1.in",
         duration: 0.5,
       });
     }
@@ -47,24 +47,24 @@ const Card = ({ product }: ProductProps) => {
   }, [isHovered]);
 
   useEffect(() => {
-    gsap.to('.scroll-image', {
+    gsap.to(".scroll-image", {
       scrollTrigger: {
-        trigger: '.scroll-image',
-        start: 'top 50%',
-        end: 'bottom 50%',
+        trigger: ".scroll-image",
+        start: "top 50%",
+        end: "bottom 50%",
         scrub: 5,
       },
       rotation: 15,
       x: -50,
       scale: 1.2,
-      ease: 'power1.inOut',
+      ease: "power1.inOut",
     });
   }, []);
 
   return (
-    <div className="bg-secondary text-quinary shadow-2xl rounded-lg gap-2 flex flex-col group transition-all duration-300 hover:shadow-neutral-400 mt-5 w-full h-full">
+    <div className="group mt-5 flex h-full w-full flex-col gap-2 rounded-lg bg-secondary text-quinary shadow-2xl transition-all duration-300 hover:shadow-neutral-400">
       <div
-        className="relative w-full pt-[100%] overflow-hidden rounded-lg"
+        className="relative w-full overflow-hidden rounded-lg pt-[100%]"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -74,14 +74,14 @@ const Card = ({ product }: ProductProps) => {
           alt={product.name}
           layout="fill"
           objectFit="contain"
-          className="scroll-image absolute inset-0 transform -translate-x-20 -translate-y-15"
+          className="scroll-image -translate-y-15 absolute inset-0 -translate-x-20 transform"
         />
       </div>
       <Link
         href="/products"
-        className="flex flex-col py-1 px-4 flex-grow justify-end items-end"
+        className="flex grow flex-col items-end justify-end px-4 py-1"
       >
-        <h2 className=" text-xl sm:text-2xl font-semibold line-clamp-2">
+        <h2 className="line-clamp-2 text-xl font-semibold sm:text-2xl">
           {product.name}
         </h2>
         <p className="text-sm text-tertiary/70 hover:text-primary">
