@@ -48,7 +48,7 @@ const RegisterForm = () => {
   });
 
   // Envío del formulario
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     // Marcar todos los campos como tocados
@@ -129,10 +129,7 @@ const RegisterForm = () => {
   }, [data]);
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg"
-    >
+    <form className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg">
       {/* Campo de email */}
       <label
         htmlFor="email"
@@ -252,7 +249,7 @@ const RegisterForm = () => {
       <Button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
-        type="submit" // El botón es de tipo submit
+        onClick={handleSubmit} // Usamos onClick aquí para el botón
       >
         Register
       </Button>
