@@ -47,7 +47,7 @@ const RegisterForm = () => {
     name: false,
   });
 
-  // envío del formulario
+  // Envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -117,7 +117,7 @@ const RegisterForm = () => {
     setDirty({ ...dirty, [e.target.name]: true });
   };
 
-  // validar los campos del formulario
+  // Validar los campos del formulario
   useEffect(() => {
     setErrors({
       email: validateEmail(data.email),
@@ -133,6 +133,7 @@ const RegisterForm = () => {
       onSubmit={handleSubmit}
       className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg"
     >
+      {/* Campo de email */}
       <label
         htmlFor="email"
         className="block text-lg font-semibold text-quinary"
@@ -151,10 +152,11 @@ const RegisterForm = () => {
           errors.email ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.email && errors.email ? (
+      {dirty.email && errors.email && (
         <p className="text-red-500">{errors.email}</p>
-      ) : null}
+      )}
 
+      {/* Campo de contraseña */}
       <label
         htmlFor="password"
         className="block text-lg font-semibold text-quinary"
@@ -173,10 +175,11 @@ const RegisterForm = () => {
           errors.password ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.password && errors.password ? (
+      {dirty.password && errors.password && (
         <p className="text-red-500">{errors.password}</p>
-      ) : null}
+      )}
 
+      {/* Campo de nombre */}
       <label
         htmlFor="name"
         className="block text-lg font-semibold text-quinary"
@@ -195,10 +198,11 @@ const RegisterForm = () => {
           errors.name ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.name && errors.name ? (
+      {dirty.name && errors.name && (
         <p className="text-red-500">{errors.name}</p>
-      ) : null}
+      )}
 
+      {/* Campo de teléfono */}
       <label
         htmlFor="phone"
         className="block text-lg font-semibold text-quinary"
@@ -217,10 +221,11 @@ const RegisterForm = () => {
           errors.phone ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.phone && errors.phone ? (
+      {dirty.phone && errors.phone && (
         <p className="text-red-500">{errors.phone}</p>
-      ) : null}
+      )}
 
+      {/* Campo de dirección */}
       <label
         htmlFor="address"
         className="block text-lg font-semibold text-quinary"
@@ -239,13 +244,15 @@ const RegisterForm = () => {
           errors.address ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.address && errors.address ? (
+      {dirty.address && errors.address && (
         <p className="text-red-500">{errors.address}</p>
-      ) : null}
+      )}
+
+      {/* Botón de registro */}
       <Button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
-        onClick={handleSubmit}
+        type="submit" // El botón es de tipo submit
       >
         Register
       </Button>
