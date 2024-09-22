@@ -72,12 +72,14 @@ const RegisterForm = () => {
       return;
     }
 
+    // Envío del formulario si no hay errores
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const response = await registerService(apiUrl + "/users/register", data);
       console.log(response);
 
-      if (response.register) {
+      if (!response.register) {
+        // SweetAlert de éxito y redirección al login
         MySwal.fire({
           title: <p>You are Registered!</p>,
           icon: "success",
@@ -243,7 +245,7 @@ const RegisterForm = () => {
       <Button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
-        type="submit"
+        onClick={handleSubmit}
       >
         Register
       </Button>

@@ -163,7 +163,7 @@ export default function LoginForm() {
       )}
 
       <button
-        className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
+        className="mt-6 w-full rounded rounded-md border-2 bg-primary px-4 py-2 py-3 font-bold text-white shadow-md transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg active:scale-100"
         type="submit"
       >
         Iniciar sesión
