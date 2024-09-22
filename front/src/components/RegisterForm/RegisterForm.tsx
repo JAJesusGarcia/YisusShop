@@ -16,9 +16,18 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
+interface DirtyState {
+  email: boolean;
+  password: boolean;
+  address: boolean;
+  phone: boolean;
+  name: boolean;
+}
+
 const RegisterForm = () => {
   const router = useRouter();
 
+  // Estados iniciales para el formulario
   const initialData: Data = {
     email: "",
     password: "",
@@ -26,38 +35,76 @@ const RegisterForm = () => {
     phone: "",
     name: "",
   };
-  const initiualDirty = {
+
+  // Estados para manejar datos del formulario, errores y campos tocados
+  const [data, setData] = useState<Data>(initialData);
+  const [errors, setErrors] = useState<Data>(initialData);
+  const [dirty, setDirty] = useState<DirtyState>({
     email: false,
     password: false,
     address: false,
     phone: false,
     name: false,
-  };
+  });
 
-  const [data, setData] = useState(initialData);
-  const [errors, setErrors] = useState(initialData);
-  const [dirty, setDirty] = useState(initiualDirty);
+  // envío del formulario
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  const handleSubmit = async () => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await registerService(apiUrl + "/users/register", data);
-    console.log(response);
-    if (!response.register) {
-      // alert('You are Registred!');
+    // Marcar todos los campos como tocados
+    setDirty((prevDirty) =>
+      Object.keys(prevDirty).reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: true,
+        }),
+        { ...prevDirty },
+      ),
+    );
+
+    // Verificar si hay errores
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    if (hasErrors) {
       MySwal.fire({
-        title: <p>You are Registred!</p>,
-        icon: "success",
+        title: <p>Please correct the errors in the form</p>,
+        icon: "error",
       });
-      router.back();
-    } else {
-      // alert(response.message);
+      return;
+    }
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await registerService(apiUrl + "/users/register", data);
+      console.log(response);
+
+      if (response.register) {
+        MySwal.fire({
+          title: <p>You are Registered!</p>,
+          icon: "success",
+        });
+        router.back();
+      } else {
+        MySwal.fire({
+          title: (
+            <p>
+              {response.message || "Registration failed. Please try again."}
+            </p>
+          ),
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
       MySwal.fire({
-        title: <p>{response.message}</p>,
+        title: (
+          <p>An error occurred during registration. Please try again later.</p>
+        ),
         icon: "error",
       });
     }
   };
 
+  // Manejadores de eventos para cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -66,6 +113,7 @@ const RegisterForm = () => {
     setDirty({ ...dirty, [e.target.name]: true });
   };
 
+  // validar los campos del formulario
   useEffect(() => {
     setErrors({
       email: validateEmail(data.email),
@@ -79,7 +127,7 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-auto mb-20 mt-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 pt-8 shadow-lg"
+      className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg"
     >
       <label
         htmlFor="email"
@@ -99,7 +147,10 @@ const RegisterForm = () => {
           errors.email ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.email ? <p className="text-red-500">{errors.email}</p> : null}
+      {dirty.email && errors.email ? (
+        <p className="text-red-500">{errors.email}</p>
+      ) : null}
+
       <label
         htmlFor="password"
         className="block text-lg font-semibold text-quinary"
@@ -118,18 +169,19 @@ const RegisterForm = () => {
           errors.password ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.password ? (
+      {dirty.password && errors.password ? (
         <p className="text-red-500">{errors.password}</p>
       ) : null}
+
       <label
-        htmlFor="phone"
+        htmlFor="name"
         className="block text-lg font-semibold text-quinary"
       >
         Name
       </label>
       <input
-        type="string"
-        placeholder="name"
+        type="text"
+        placeholder="Name"
         id="name"
         name="name"
         value={data.name}
@@ -139,7 +191,10 @@ const RegisterForm = () => {
           errors.name ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.name ? <p className="text-red-500">{errors.name}</p> : null}
+      {dirty.name && errors.name ? (
+        <p className="text-red-500">{errors.name}</p>
+      ) : null}
+
       <label
         htmlFor="phone"
         className="block text-lg font-semibold text-quinary"
@@ -147,8 +202,8 @@ const RegisterForm = () => {
         Phone
       </label>
       <input
-        type="phone"
-        placeholder="phone"
+        type="tel"
+        placeholder="Phone"
         id="phone"
         name="phone"
         value={data.phone}
@@ -158,7 +213,10 @@ const RegisterForm = () => {
           errors.phone ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.phone ? <p className="text-red-500">{errors.phone}</p> : null}
+      {dirty.phone && errors.phone ? (
+        <p className="text-red-500">{errors.phone}</p>
+      ) : null}
+
       <label
         htmlFor="address"
         className="block text-lg font-semibold text-quinary"
@@ -167,7 +225,7 @@ const RegisterForm = () => {
       </label>
       <input
         type="text"
-        placeholder="address"
+        placeholder="Address"
         id="address"
         name="address"
         value={data.address}
@@ -177,12 +235,13 @@ const RegisterForm = () => {
           errors.address ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.address ? <p className="text-red-500">{errors.address}</p> : null}
-
+      {dirty.address && errors.address ? (
+        <p className="text-red-500">{errors.address}</p>
+      ) : null}
       <Button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
-        onClick={handleSubmit}
+        type="submit"
       >
         Register
       </Button>

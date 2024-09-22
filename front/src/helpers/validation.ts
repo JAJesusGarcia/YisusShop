@@ -6,18 +6,16 @@ export const validateEmail = (email: string): string => {
 };
 
 export const validatePassword = (password: string): string => {
-  console.log("Password ingresada:", password); // Debug
-  let validation = "";
+  if (!password) return "Password is required";
+
   const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>\/?])[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>\/?]{8,}$/;
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/;
 
   if (!regexPassword.test(password)) {
-    console.log("Contraseña inválida"); // Debug
-    validation = "Invalid password";
-  } else {
-    console.log("Contraseña válida"); // Debug
+    return "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character";
   }
-  return validation;
+
+  return "";
 };
 
 export const validateAddress = (address: string) => {

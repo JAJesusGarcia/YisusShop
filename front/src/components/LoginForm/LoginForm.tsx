@@ -13,45 +13,85 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
-const LoginForm = () => {
-  const { setUser } = useContext(AuthContext);
-  const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
-  const initialData: Data = { email: "", password: "" };
-  const initialDirty = { email: false, password: false };
+interface DirtyState {
+  email: boolean;
+  password: boolean;
+}
 
+const LoginForm = () => {
+  // Contexto de autenticación y router
+  const { setUser } = useContext(AuthContext);
+  const router = useRouter();
+
+  // Estados para manejar la carga, datos del formulario, errores y campos tocados
+  const [isLoading, setIsLoading] = useState(false);
+  const initialData: Data = { email: "", password: "" };
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState(initialData);
-  const [dirty, setDirty] = useState(initialDirty);
+  const [dirty, setDirty] = useState<DirtyState>({
+    email: false,
+    password: false,
+  });
 
-  const handleSubmit = async () => {
-    setIsLoading(true); // Inicia el estado de carga
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-    const response = await loginService(apiUrl + "/users/login", data);
+  // manejar el envío del formulario
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    if (response.login) {
+    // Marcar todos los campos como tocados
+    setDirty((prevDirty) =>
+      Object.keys(prevDirty).reduce(
+        (acc, key) => ({
+          ...acc,
+          [key]: true,
+        }),
+        { ...prevDirty },
+      ),
+    );
+
+    // Verificar si hay errores
+    const hasErrors = Object.values(errors).some((error) => error !== "");
+    if (hasErrors) {
       MySwal.fire({
-        title: <p>Login Successful!</p>,
-        icon: "success",
-        // didOpen: () => {
-        //   MySwal.showLoading();
-        //   setTimeout(() => {
-        //     MySwal.close();
-        //   }, 1000);
-        // },
-      });
-      setUser(response);
-      // No redirigimos inmediatamente, dejamos que el efecto se encargue
-    } else {
-      // alert('User or Credentials Wrong!');
-      MySwal.fire({
-        title: <p>User or Credentials Wrong!</p>,
+        title: <p>Please correct the errors in the form</p>,
         icon: "error",
       });
-      setIsLoading(false); // Desactiva el estado de carga si hay un error
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const response = await loginService(apiUrl + "/users/login", data);
+
+      if (response.login) {
+        MySwal.fire({
+          title: <p>Login Successful!</p>,
+          icon: "success",
+        });
+        setUser(response);
+        // Redirigir al usuario después de un login exitoso
+        setTimeout(() => {
+          router.back();
+        }, 2000);
+      } else {
+        MySwal.fire({
+          title: <p>{response.message || "Invalid email or password"}</p>,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      MySwal.fire({
+        title: <p>An error occurred during login. Please try again later.</p>,
+        icon: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
+  // Manejadores de eventos para cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -60,6 +100,7 @@ const LoginForm = () => {
     setDirty({ ...dirty, [e.target.name]: true });
   };
 
+  // validar los campos del formulario
   useEffect(() => {
     setErrors({
       email: validateEmail(data.email),
@@ -67,28 +108,15 @@ const LoginForm = () => {
     });
   }, [data]);
 
-  useEffect(() => {
-    if (isLoading) {
-      // Simula un retraso antes de redirigir
-      const timer = setTimeout(() => {
-        router.back(); // Usa router.back() como en tu versión original
-      }, 2000); // 2 segundos de retraso, ajusta según necesites
-
-      return () => clearTimeout(timer);
-    }
-  }, [isLoading, router]);
-
+  // mostrar el componente de carga si isLoading es true
   if (isLoading) {
     return <Loading />;
   }
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        handleSubmit();
-      }}
-      className="mx-auto mb-20 mt-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 pt-8 shadow-lg"
+      onSubmit={handleSubmit}
+      className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg"
     >
       <label
         htmlFor="email"
@@ -108,7 +136,10 @@ const LoginForm = () => {
           errors.email ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.email ? <p className="text-red-500">{errors.email}</p> : null}
+      {dirty.email && errors.email ? (
+        <p className="text-red-500">{errors.email}</p>
+      ) : null}
+
       <label
         htmlFor="password"
         className="block text-lg font-semibold text-quinary"
@@ -127,16 +158,18 @@ const LoginForm = () => {
           errors.password ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.password ? (
+      {dirty.password && errors.password ? (
         <p className="text-red-500">{errors.password}</p>
       ) : null}
+
       <Button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
         variant="secondary"
-        onClick={handleSubmit}
+        type="submit"
       >
         Login
       </Button>
+
       <Link
         className="mt-4 text-center text-sm text-primary transition-colors duration-300 hover:text-secondary"
         href="/register"
