@@ -4,7 +4,7 @@ import { AiFillInstagram } from "react-icons/ai";
 
 const SubFooter = () => {
   return (
-    <div className="mt-10 bg-secondary p-4 pb-20 pt-20">
+    <div className="mt-10 bg-secondary p-4 py-20">
       <div className="mx-auto flex max-w-screen-xl flex-wrap gap-8 lg:flex-wrap">
         <div className="order-first min-w-[250px] flex-1 rounded-md bg-secondary p-4 lg:order-none">
           <Link href="/" className="text-xl font-bold text-quinary">
@@ -57,7 +57,7 @@ const SubFooter = () => {
               ],
             },
             {
-              title: "Title...",
+              title: "Our Services",
               links: [
                 "Adventures",
                 "Expert Interview",
@@ -66,7 +66,7 @@ const SubFooter = () => {
               ],
             },
             {
-              title: "Our Services",
+              title: "Market Sectors",
               links: [
                 "Automotive Parts & System",
                 "Power & Energy",
