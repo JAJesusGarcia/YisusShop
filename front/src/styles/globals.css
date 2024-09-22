@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  @apply flex flex-col min-h-[100vh] bg-quaternary text-tertiary;
+  @apply flex min-h-[100vh] flex-col bg-quaternary text-tertiary;
 }
 
 footer {
@@ -11,7 +11,7 @@ footer {
 }
 
 .container {
-  @apply py-0 px-6 max-w-screen-xl my-0 mx-auto;
+  @apply mx-auto my-0 max-w-screen-xl px-6 py-0;
 }
 
 h1,

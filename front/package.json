@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\""
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "refrescar": "rm -rf .next && npm run build && npx prettier --write ."
   },
   "dependencies": {
     "framer-motion": "^11.3.31",
