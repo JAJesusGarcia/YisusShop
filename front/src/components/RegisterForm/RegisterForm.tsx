@@ -82,7 +82,9 @@ const RegisterForm = () => {
           title: <p>You are Registered!</p>,
           icon: "success",
         });
-        router.back();
+        setTimeout(() => {
+          router.push("/login"); // Redirige al login tras 2 segundos
+        }, 2000);
       } else {
         MySwal.fire({
           title: (

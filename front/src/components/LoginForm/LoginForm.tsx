@@ -1,6 +1,6 @@
 "use client";
+
 import { useContext, useEffect, useState } from "react";
-import Button from "../Button/Button";
 import { validateEmail, validatePassword } from "../../helpers/validation";
 import Link from "next/link";
 import { ILoginForm as Data } from "../../interfaces/forms";
@@ -18,12 +18,10 @@ interface DirtyState {
   password: boolean;
 }
 
-const LoginForm = () => {
-  // Contexto de autenticación y router
+export default function LoginForm() {
   const { setUser } = useContext(AuthContext);
   const router = useRouter();
 
-  // Estados para manejar la carga, datos del formulario, errores y campos tocados
   const [isLoading, setIsLoading] = useState(false);
   const initialData: Data = { email: "", password: "" };
   const [data, setData] = useState(initialData);
@@ -33,26 +31,23 @@ const LoginForm = () => {
     password: false,
   });
 
-  // manejar el envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Marcar todos los campos como tocados
     setDirty((prevDirty) =>
       Object.keys(prevDirty).reduce(
         (acc, key) => ({
           ...acc,
           [key]: true,
         }),
-        { ...prevDirty },
+        { ...prevDirty } as DirtyState,
       ),
     );
 
-    // Verificar si hay errores
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
       MySwal.fire({
-        title: <p>Please correct the errors in the form</p>,
+        title: <p>Por favor, corrige los errores en el formulario</p>,
         icon: "error",
       });
       return;
@@ -62,28 +57,34 @@ const LoginForm = () => {
 
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      if (!apiUrl) throw new Error("API URL not defined");
+
       const response = await loginService(apiUrl + "/users/login", data);
 
       if (response.login) {
         MySwal.fire({
-          title: <p>Login Successful!</p>,
+          title: <p>¡Inicio de sesión exitoso!</p>,
           icon: "success",
         });
         setUser(response);
-        // Redirigir al usuario después de un login exitoso
         setTimeout(() => {
           router.back();
         }, 2000);
       } else {
         MySwal.fire({
-          title: <p>{response.message || "Invalid email or password"}</p>,
+          title: <p>{response.message || "Email o contraseña inválidos"}</p>,
           icon: "error",
         });
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error("Error de inicio de sesión:", error);
       MySwal.fire({
-        title: <p>An error occurred during login. Please try again later.</p>,
+        title: (
+          <p>
+            Ocurrió un error durante el inicio de sesión. Por favor, intenta de
+            nuevo más tarde.
+          </p>
+        ),
         icon: "error",
       });
     } finally {
@@ -91,7 +92,6 @@ const LoginForm = () => {
     }
   };
 
-  // Manejadores de eventos para cambios en los inputs
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
@@ -100,7 +100,6 @@ const LoginForm = () => {
     setDirty({ ...dirty, [e.target.name]: true });
   };
 
-  // validar los campos del formulario
   useEffect(() => {
     setErrors({
       email: validateEmail(data.email),
@@ -108,7 +107,6 @@ const LoginForm = () => {
     });
   }, [data]);
 
-  // mostrar el componente de carga si isLoading es true
   if (isLoading) {
     return <Loading />;
   }
@@ -126,25 +124,25 @@ const LoginForm = () => {
       </label>
       <input
         type="email"
-        placeholder="example@example.com"
+        placeholder="ejemplo@ejemplo.com"
         id="email"
         name="email"
         value={data.email}
         onChange={handleChange}
         onBlur={handleBlur}
         className={`block rounded-md bg-primary/10 p-3 text-primary ${
-          errors.email ? "border-red-500" : "border-transparent"
+          errors.email && dirty.email ? "border-red-500" : "border-transparent"
         }`}
       />
-      {dirty.email && errors.email ? (
+      {dirty.email && errors.email && (
         <p className="text-red-500">{errors.email}</p>
-      ) : null}
+      )}
 
       <label
         htmlFor="password"
         className="block text-lg font-semibold text-quinary"
       >
-        Password
+        Contraseña
       </label>
       <input
         type="password"
@@ -155,29 +153,28 @@ const LoginForm = () => {
         onChange={handleChange}
         onBlur={handleBlur}
         className={`block rounded-md bg-primary/10 p-3 text-primary ${
-          errors.password ? "border-red-500" : "border-transparent"
+          errors.password && dirty.password
+            ? "border-red-500"
+            : "border-transparent"
         }`}
       />
-      {dirty.password && errors.password ? (
+      {dirty.password && errors.password && (
         <p className="text-red-500">{errors.password}</p>
-      ) : null}
+      )}
 
-      <Button
+      <button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
-        variant="secondary"
         type="submit"
       >
-        Login
-      </Button>
+        Iniciar sesión
+      </button>
 
       <Link
         className="mt-4 text-center text-sm text-primary transition-colors duration-300 hover:text-secondary"
         href="/register"
       >
-        Don't have an account?
+        ¿No tienes una cuenta?
       </Link>
     </form>
   );
-};
-
-export default LoginForm;
+}
