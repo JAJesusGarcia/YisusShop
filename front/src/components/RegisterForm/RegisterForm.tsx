@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import Button from "../Button/Button";
 import {
   validateEmail,
   validatePassword,
@@ -246,13 +245,12 @@ const RegisterForm = () => {
       )}
 
       {/* Botón de registro */}
-      <Button
+      <button
         className="mt-6 w-full rounded-md bg-primary py-3 font-bold text-white shadow-md transition-all duration-300 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg"
-        variant="secondary"
-        onClick={handleSubmit} // Usamos onClick aquí para el botón
+        onClick={handleSubmit} // Usamos onClick aquí para el botón regular
       >
         Register
-      </Button>
+      </button>
     </form>
   );
 };
