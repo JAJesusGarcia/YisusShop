@@ -38,6 +38,10 @@ const Contact = () => {
       MySwal.fire({
         title: <p>Message Sent Successfully!</p>,
         icon: "success",
+        backdrop: true,
+        toast: true,
+        position: "center",
+        confirmButtonText: "OK",
       });
       // Clear form inputs
       setFormData({
