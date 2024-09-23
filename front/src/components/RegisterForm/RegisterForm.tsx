@@ -252,7 +252,7 @@ const RegisterForm = () => {
 
       {/* Botón de registro */}
       <button
-        className="mt-6 w-full rounded rounded-md border-2 bg-primary px-4 py-2 py-3 font-bold text-white shadow-md transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-secondary hover:text-primary hover:shadow-lg active:scale-100"
+        className="relative z-10 mt-10 rounded border-2 border-primary bg-primary px-4 py-2 font-bold text-secondary transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-secondary hover:text-primary active:scale-100"
         onClick={handleSubmit} // Usamos onClick aquí para el botón regular
       >
         Register
