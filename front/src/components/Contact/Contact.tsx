@@ -21,6 +21,31 @@ const Contact = () => {
     message: "",
   });
 
+  const showAlert = (
+    message: string | React.ReactNode,
+    icon: "success" | "error" | "warning" | "info",
+    callback?: () => void,
+  ) => {
+    MySwal.fire({
+      html: <p>{message}</p>,
+      icon: icon,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+      willClose: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -35,14 +60,16 @@ const Contact = () => {
     e.preventDefault();
     // Simulate form submission
     setTimeout(() => {
-      MySwal.fire({
-        title: <p>Message Sent Successfully!</p>,
-        icon: "success",
-        backdrop: true,
-        toast: true,
-        position: "center",
-        confirmButtonText: "OK",
-      });
+      // MySwal.fire({
+      //   title: <p>Message Sent Successfully!</p>,
+      //   icon: "success",
+      //   backdrop: true,
+      //   toast: true,
+      //   position: "center",
+      //   confirmButtonText: "OK",
+      // });
+
+      showAlert("Message Sent Successfully!", "success");
       // Clear form inputs
       setFormData({
         name: "",
@@ -58,8 +85,8 @@ const Contact = () => {
         <div className="p-8">
           <h1 className="mb-6 text-4xl font-bold text-quinary">Contact Us</h1>
           <p className="mb-8 text-primary">
-            We'd love to hear from you. Please fill out the form below or use
-            our contact information to get in touch.
+            We would love to hear from you. Please fill out the form below or
+            use our contact information to get in touch.
           </p>
 
           <div className="flex flex-col gap-10 md:flex-row">

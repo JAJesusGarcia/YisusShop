@@ -21,22 +21,52 @@ import { IOrder } from "@/interfaces/forms";
 const MySwal = withReactContent(Swal);
 
 const Cart = () => {
+  // Extraer cart y funciones del contexto
   const { cart, removeFromCart, clearCart } = useContext(CartContext);
+  // Extraer user y funciones del contexto de autenticación
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
   useEffect(() => {
+    // Verificar si el usuario esta autenticado
     if (!user) {
       router.push("/login");
     }
   }, [user, router]);
 
+  const showAlert = (
+    message: string | React.ReactNode,
+    icon: "success" | "error" | "warning" | "info",
+    callback?: () => void,
+  ) => {
+    MySwal.fire({
+      html: <p>{message}</p>,
+      icon: icon,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+      willClose: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
+  };
+
   const handleOrder = () => {
+    // Defino la URL para enviar la orden
     const url =
       process.env.NEXT_PUBLIC_API_URL + "/orders" ||
       "http://localhost:3001/orders";
     const products = cart.map((product: IProduct) => product.id);
 
+    // Enviar la orden al servidor
     fetch(url, {
       method: "POST",
       headers: {
@@ -58,27 +88,32 @@ const Cart = () => {
           date: json.date,
         } as IOrder);
 
-        // alert('Order placed successfully!');
-        MySwal.fire({
-          title: "Order placed successfully!",
-          icon: "success",
-          backdrop: true,
-          toast: true,
-          position: "center",
-          confirmButtonText: "OK",
-        });
+        // Alerta exitosa!
+        // MySwal.fire({
+        //   title: "Order placed successfully!",
+        //   icon: "success",
+        //   backdrop: true,
+        //   toast: true,
+        //   position: "center",
+        //   confirmButtonText: "OK",
+        // });
+        showAlert("Order placed successfully!", "success");
       })
       .catch((error) => {
         console.error("Error placing order:", error);
-        // alert('There was an error placing your order. Please try again.');
-        MySwal.fire({
-          title: "There was an error placing your order. Please try again.",
-          icon: "error",
-          backdrop: true,
-          toast: true,
-          position: "center",
-          confirmButtonText: "OK",
-        });
+        // Alerta de error!
+        // MySwal.fire({
+        //   title: "There was an error placing your order. Please try again.",
+        //   icon: "error",
+        //   backdrop: true,
+        //   toast: true,
+        //   position: "center",
+        //   confirmButtonText: "OK",
+        // });
+        showAlert(
+          "There was an error placing your order. Please try again.",
+          "error",
+        );
       });
   };
 
@@ -94,12 +129,16 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         removeFromCart(productId); // Solo eliminar si el usuario confirma
-        MySwal.fire({
-          title: "Removed!",
-          text: `${productName} has been removed from your cart.`,
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+        // MySwal.fire({
+        //   title: "Removed!",
+        //   text: `${productName} has been removed from your cart.`,
+        //   icon: "success",
+        //   backdrop: true,
+        //   toast: true,
+        //   position: "center",
+        //   confirmButtonText: "OK",
+        // });
+        showAlert(`${productName} has been removed from your cart.`, "success");
       }
     });
   };
@@ -115,17 +154,22 @@ const Cart = () => {
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        clearCart(); // Llamamos a la función clearCart para vaciar el carrito
-        MySwal.fire({
-          title: "Cleared!",
-          text: "Your cart has been cleared.",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
+        clearCart();
+        // MySwal.fire({
+        //   title: "Cleared!",
+        //   text: "Your cart has been cleared.",
+        //   icon: "success",
+        //   backdrop: true,
+        //   toast: true,
+        //   position: "center",
+        //   confirmButtonText: "OK",
+        // });
+        showAlert("Your cart has been cleared.", "success");
       }
     });
   };
 
+  // Calcular el total de la compra
   const totalPrice = cart.reduce((a: number, b: IProduct) => a + b.price, 0);
 
   return (

@@ -31,6 +31,38 @@ export default function LoginForm() {
     password: false,
   });
 
+  useEffect(() => {
+    // Store the referrer when the component mounts
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("loginReferrer", document.referrer);
+    }
+  }, []);
+
+  const showAlert = (
+    message: string,
+    icon: "success" | "error",
+    callback?: () => void,
+  ) => {
+    MySwal.fire({
+      title: <p>{message}</p>,
+      icon: icon,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+      willClose: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -46,13 +78,7 @@ export default function LoginForm() {
 
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
-      MySwal.fire({
-        title: <p>Por favor, corrige los errores en el formulario</p>,
-        icon: "error",
-        backdrop: true,
-        toast: true,
-        position: "center",
-      });
+      showAlert("Por favor, corrige los errores en el formulario", "error");
       return;
     }
 
@@ -65,40 +91,25 @@ export default function LoginForm() {
       const response = await loginService(apiUrl + "/users/login", data);
 
       if (response.login) {
-        MySwal.fire({
-          title: <p>¡Inicio de sesión exitoso!</p>,
-          icon: "success",
-          backdrop: true,
-          toast: true,
-          position: "center",
+        showAlert("¡Inicio de sesión exitoso!", "success", () => {
+          setUser(response);
+          const referrer = sessionStorage.getItem("loginReferrer");
+          if (referrer && referrer.includes("/register")) {
+            router.push("/");
+          } else {
+            router.back();
+          }
+          sessionStorage.removeItem("loginReferrer");
         });
-        setUser(response);
-        setTimeout(() => {
-          router.back();
-        }, 2000);
       } else {
-        MySwal.fire({
-          title: <p>{response.message || "Email o contraseña inválidos"}</p>,
-          icon: "error",
-          backdrop: true,
-          toast: true,
-          position: "center",
-        });
+        showAlert(response.message || "Email o contraseña inválidos", "error");
       }
     } catch (error) {
       console.error("Error de inicio de sesión:", error);
-      MySwal.fire({
-        title: (
-          <p>
-            Ocurrió un error durante el inicio de sesión. Por favor, intenta de
-            nuevo más tarde.
-          </p>
-        ),
-        icon: "error",
-        backdrop: true,
-        toast: true,
-        position: "center",
-      });
+      showAlert(
+        "Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo más tarde.",
+        "error",
+      );
     } finally {
       setIsLoading(false);
     }

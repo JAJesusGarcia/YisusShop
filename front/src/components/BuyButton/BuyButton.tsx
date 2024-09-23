@@ -10,6 +10,7 @@ import withReactContent from "sweetalert2-react-content";
 
 const MySwal = withReactContent(Swal);
 
+// interfaz para las props del componente
 interface BuyButtonProps {
   product: IProduct;
 }
@@ -19,31 +20,41 @@ const BuyButton = ({ product }: BuyButtonProps) => {
   const { addToCart, cart } = useContext(CartContext);
   const router = useRouter();
 
+  const showAlert = (
+    message: string | React.ReactNode,
+    icon: "success" | "error" | "warning" | "info",
+    callback?: () => void,
+  ) => {
+    MySwal.fire({
+      html: <p>{message}</p>,
+      icon: icon,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+      willClose: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
+  };
+
   const handleBuy = () => {
     if (!user?.login) {
       router.push("/login");
     } else {
+      // Verificar si el producto ya está en el carrito
       if (!cart.some((p: IProduct) => p.id === product.id)) {
         addToCart(product);
-        // alert(`${product.name} added to your cart`);
-        MySwal.fire({
-          title: `${product.name} added to your cart`,
-          icon: "success",
-          backdrop: true,
-          toast: true,
-          position: "center",
-          confirmButtonText: "OK",
-        });
+        showAlert(<>{product.name} added to your cart</>, "success");
       } else {
-        // alert(`${product.name} is already in your cart`);
-        MySwal.fire({
-          title: `${product.name} is already in your cart`,
-          icon: "warning",
-          backdrop: true,
-          toast: true,
-          position: "center",
-          confirmButtonText: "OK",
-        });
+        showAlert(<>{product.name} is already in your cart</>, "warning");
       }
     }
   };

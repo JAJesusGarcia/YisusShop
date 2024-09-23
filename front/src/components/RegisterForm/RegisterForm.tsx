@@ -46,6 +46,31 @@ const RegisterForm = () => {
     name: false,
   });
 
+  const showAlert = (
+    message: string,
+    icon: "success" | "error",
+    callback?: () => void,
+  ) => {
+    MySwal.fire({
+      title: <p>{message}</p>,
+      icon: icon,
+      toast: true,
+      position: "top",
+      showConfirmButton: false,
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener("mouseenter", Swal.stopTimer);
+        toast.addEventListener("mouseleave", Swal.resumeTimer);
+      },
+      willClose: () => {
+        if (callback) {
+          callback();
+        }
+      },
+    });
+  };
+
   // Envío del formulario
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -64,13 +89,7 @@ const RegisterForm = () => {
     // Verificar si hay errores
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
-      MySwal.fire({
-        title: <p>Please correct the errors in the form</p>,
-        icon: "error",
-        backdrop: true,
-        toast: true,
-        position: "center",
-      });
+      showAlert("Por favor, corrige los errores en el formulario", "error");
       return;
     }
 
@@ -81,35 +100,21 @@ const RegisterForm = () => {
       console.log(response);
 
       if (!response.register) {
-        // SweetAlert de éxito y redirección al login
-        MySwal.fire({
-          title: <p>You are Registered!</p>,
-          icon: "success",
-          backdrop: true,
-          toast: true,
-          position: "center",
+        showAlert("¡Te has registrado exitosamente!", "success", () => {
+          router.push("/login");
         });
-        setTimeout(() => {
-          router.push("/login"); // Redirige al login tras 2 segundos
-        }, 2000);
       } else {
-        MySwal.fire({
-          title: (
-            <p>
-              {response.message || "Registration failed. Please try again."}
-            </p>
-          ),
-          icon: "error",
-        });
+        showAlert(
+          response.message || "El registro falló. Por favor, intenta de nuevo.",
+          "error",
+        );
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      MySwal.fire({
-        title: (
-          <p>An error occurred during registration. Please try again later.</p>
-        ),
-        icon: "error",
-      });
+      console.error("Error de registro:", error);
+      showAlert(
+        "Ocurrió un error durante el registro. Por favor, intenta de nuevo más tarde.",
+        "error",
+      );
     }
   };
 
