@@ -20,7 +20,7 @@ export const validatePassword = (password: string): string => {
 
 export const validateAddress = (address: string) => {
   let validation = "";
-  const regexAddress = /^[a-zA-Z0-9\s,'-]+$/;
+  const regexAddress = /^[a-zA-Z0-9\sáéíóúÁÉÍÓÚñÑ,'-]+$/;
   if (!regexAddress.test(address)) validation = "Invalid address";
   return validation;
 };
