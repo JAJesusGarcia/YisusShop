@@ -29,6 +29,9 @@ const BuyButton = ({ product }: BuyButtonProps) => {
         MySwal.fire({
           title: `${product.name} added to your cart`,
           icon: "success",
+          backdrop: true,
+          toast: true,
+          position: "center",
           confirmButtonText: "OK",
         });
       } else {
@@ -36,6 +39,9 @@ const BuyButton = ({ product }: BuyButtonProps) => {
         MySwal.fire({
           title: `${product.name} is already in your cart`,
           icon: "warning",
+          backdrop: true,
+          toast: true,
+          position: "center",
           confirmButtonText: "OK",
         });
       }
