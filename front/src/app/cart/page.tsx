@@ -62,6 +62,9 @@ const Cart = () => {
         MySwal.fire({
           title: "Order placed successfully!",
           icon: "success",
+          backdrop: true,
+          toast: true,
+          position: "center",
           confirmButtonText: "OK",
         });
       })
@@ -71,6 +74,9 @@ const Cart = () => {
         MySwal.fire({
           title: "There was an error placing your order. Please try again.",
           icon: "error",
+          backdrop: true,
+          toast: true,
+          position: "center",
           confirmButtonText: "OK",
         });
       });
@@ -124,7 +130,7 @@ const Cart = () => {
 
   return (
     <div className="container">
-      <div className="mx-auto mb-16 mt-16 max-w-4xl overflow-hidden rounded-lg bg-tertiary shadow-lg">
+      <div className="mx-auto my-16 max-w-4xl overflow-hidden rounded-lg bg-tertiary shadow-lg">
         <div className="flex items-center justify-between bg-primary p-6 text-white">
           <h1 className="text-quatinary text-3xl font-bold">Your Cart</h1>
           <ShoppingCart size={28} />

@@ -49,6 +49,9 @@ export default function LoginForm() {
       MySwal.fire({
         title: <p>Por favor, corrige los errores en el formulario</p>,
         icon: "error",
+        backdrop: true,
+        toast: true,
+        position: "center",
       });
       return;
     }
@@ -65,6 +68,9 @@ export default function LoginForm() {
         MySwal.fire({
           title: <p>¡Inicio de sesión exitoso!</p>,
           icon: "success",
+          backdrop: true,
+          toast: true,
+          position: "center",
         });
         setUser(response);
         setTimeout(() => {
@@ -74,6 +80,9 @@ export default function LoginForm() {
         MySwal.fire({
           title: <p>{response.message || "Email o contraseña inválidos"}</p>,
           icon: "error",
+          backdrop: true,
+          toast: true,
+          position: "center",
         });
       }
     } catch (error) {
@@ -86,6 +95,9 @@ export default function LoginForm() {
           </p>
         ),
         icon: "error",
+        backdrop: true,
+        toast: true,
+        position: "center",
       });
     } finally {
       setIsLoading(false);

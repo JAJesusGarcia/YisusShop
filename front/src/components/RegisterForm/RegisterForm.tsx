@@ -67,6 +67,9 @@ const RegisterForm = () => {
       MySwal.fire({
         title: <p>Please correct the errors in the form</p>,
         icon: "error",
+        backdrop: true,
+        toast: true,
+        position: "center",
       });
       return;
     }
@@ -82,6 +85,9 @@ const RegisterForm = () => {
         MySwal.fire({
           title: <p>You are Registered!</p>,
           icon: "success",
+          backdrop: true,
+          toast: true,
+          position: "center",
         });
         setTimeout(() => {
           router.push("/login"); // Redirige al login tras 2 segundos
