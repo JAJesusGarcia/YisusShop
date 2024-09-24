@@ -17,7 +17,7 @@ const About = () => {
             <p className="mb-4 text-primary/90">
               Today, we continue to innovate and strive for excellence in
               everything we do. Our commitment to quality and customer
-              satisfaction remains at the core of our business.
+              satisfaction remains at the core of our business...
             </p>
           </div>
           <div className="md:w-1/2">
