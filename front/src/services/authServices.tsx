@@ -1,4 +1,4 @@
-import { ILoginForm, IRegisterForm } from "@/interfaces/forms";
+import { ILoginForm, IRegisterFormData } from "@/interfaces/forms";
 
 export const loginService = async (url: string, data: ILoginForm) => {
   const response = await fetch(url, {
@@ -8,11 +8,10 @@ export const loginService = async (url: string, data: ILoginForm) => {
     },
     body: JSON.stringify(data),
   });
-  const json = await response.json();
-  return json;
+  return response.json();
 };
 
-export const registerService = async (url: string, data: IRegisterForm) => {
+export const registerService = async (url: string, data: IRegisterFormData) => {
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -20,6 +19,5 @@ export const registerService = async (url: string, data: IRegisterForm) => {
     },
     body: JSON.stringify(data),
   });
-  const json = await response.json();
-  return json;
+  return response.json();
 };
