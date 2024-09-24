@@ -247,7 +247,7 @@ const Cart = () => {
                 Finish Order
               </button>
               <button
-                className="flex items-center justify-center rounded-full bg-red-500 px-6 py-2 font-bold text-secondary transition duration-300 ease-in-out hover:bg-secondary hover:text-red-500"
+                className="flex items-center justify-center rounded-full bg-red-500 px-6 py-2 font-bold text-secondary transition duration-300 ease-in-out hover:bg-secondary hover:text-red-500 disabled:cursor-not-allowed disabled:opacity-50"
                 onClick={handleClearCart}
                 disabled={cart.length === 0}
               >

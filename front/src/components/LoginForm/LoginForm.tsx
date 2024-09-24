@@ -32,10 +32,9 @@ export default function LoginForm() {
   });
 
   useEffect(() => {
-    // Store the referrer when the component mounts
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("loginReferrer", document.referrer);
-    }
+    // Almacena la ruta actual cuando se monta el componente
+    const currentPath = window.location.pathname;
+    localStorage.setItem("previousPath", currentPath);
   }, []);
 
   const showAlert = (
@@ -49,7 +48,7 @@ export default function LoginForm() {
       toast: true,
       position: "top",
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -93,13 +92,8 @@ export default function LoginForm() {
       if (response.login) {
         showAlert("¡Inicio de sesión exitoso!", "success", () => {
           setUser(response);
-          const referrer = sessionStorage.getItem("loginReferrer");
-          if (referrer && referrer.includes("/register")) {
-            router.push("/");
-          } else {
-            router.back();
-          }
-          sessionStorage.removeItem("loginReferrer");
+          router.push("/");
+          localStorage.removeItem("previousPath");
         });
       } else {
         showAlert(response.message || "Email o contraseña inválidos", "error");
@@ -193,7 +187,7 @@ export default function LoginForm() {
       </button>
 
       <Link
-        className="mt-4 text-center text-sm text-primary transition-colors duration-300 hover:text-secondary"
+        className="mt-4 text-center text-sm text-primary transition-colors hover:text-primary/70"
         href="/register"
       >
         ¿No tienes una cuenta?

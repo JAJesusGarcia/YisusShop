@@ -9,10 +9,10 @@ export const validatePassword = (password: string): string => {
   if (!password) return "Password is required";
 
   const regexPassword =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/;
+    /^(?=.*[a-zñ])(?=.*[A-ZÑ])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])[A-Za-zñÑ\d!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,}$/;
 
   if (!regexPassword.test(password)) {
-    return "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character";
+    return "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character. You can use 'ñ' and 'Ñ'.";
   }
 
   return "";
@@ -34,7 +34,7 @@ export const validatePhone = (phone: string) => {
 
 export const validateName = (name: string) => {
   let validation = "";
-  const regexName = /^[a-zA-Z\s]+$/;
+  const regexName = /^[a-zA-ZñÑ\s]+$/;
   if (!regexName.test(name)) validation = "Invalid name";
   return validation;
 };

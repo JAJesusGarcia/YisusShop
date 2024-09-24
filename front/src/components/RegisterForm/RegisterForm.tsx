@@ -7,7 +7,7 @@ import {
   validatePhone,
   validateName,
 } from "../../helpers/validation";
-import { IRegisterForm as Data } from "../../interfaces/forms";
+import { IRegisterFormData, IRegisterSubmitData } from "../../interfaces/forms";
 import { registerService } from "@/services/authServices";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
@@ -18,6 +18,7 @@ const MySwal = withReactContent(Swal);
 interface DirtyState {
   email: boolean;
   password: boolean;
+  confirmPassword: boolean;
   address: boolean;
   phone: boolean;
   name: boolean;
@@ -27,20 +28,22 @@ const RegisterForm = () => {
   const router = useRouter();
 
   // Estados iniciales para el formulario
-  const initialData: Data = {
+  const initialData: IRegisterFormData = {
     email: "",
     password: "",
+    confirmPassword: "",
     address: "",
     phone: "",
     name: "",
   };
 
   // Estados para manejar datos del formulario, errores y campos tocados
-  const [data, setData] = useState<Data>(initialData);
-  const [errors, setErrors] = useState<Data>(initialData);
+  const [data, setData] = useState<IRegisterFormData>(initialData);
+  const [errors, setErrors] = useState<IRegisterFormData>(initialData);
   const [dirty, setDirty] = useState<DirtyState>({
     email: false,
     password: false,
+    confirmPassword: false,
     address: false,
     phone: false,
     name: false,
@@ -57,7 +60,7 @@ const RegisterForm = () => {
       toast: true,
       position: "top",
       showConfirmButton: false,
-      timer: 2000,
+      timer: 1000,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.addEventListener("mouseenter", Swal.stopTimer);
@@ -93,10 +96,20 @@ const RegisterForm = () => {
       return;
     }
 
+    // Verificar si las contraseñas coinciden
+    if (data.password !== data.confirmPassword) {
+      showAlert("Las contraseñas no coinciden", "error");
+      return;
+    }
+
     // Envío del formulario si no hay errores
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      const response = await registerService(apiUrl + "/users/register", data);
+      const { confirmPassword, ...submitData } = data;
+      const response = await registerService(
+        apiUrl + "/users/register",
+        submitData as IRegisterSubmitData,
+      );
       console.log(response);
 
       if (!response.register) {
@@ -132,6 +145,10 @@ const RegisterForm = () => {
     setErrors({
       email: validateEmail(data.email),
       password: validatePassword(data.password),
+      confirmPassword:
+        data.password !== data.confirmPassword
+          ? "Las contraseñas no coinciden"
+          : "",
       name: validateName(data.name),
       phone: validatePhone(data.phone),
       address: validateAddress(data.address),
@@ -140,52 +157,6 @@ const RegisterForm = () => {
 
   return (
     <form className="mx-auto my-20 flex w-full max-w-md flex-col gap-6 rounded-3xl border border-primary/80 bg-secondary/50 p-8 shadow-lg">
-      {/* Campo de email */}
-      <label
-        htmlFor="email"
-        className="block text-lg font-semibold text-quinary"
-      >
-        Email
-      </label>
-      <input
-        type="email"
-        placeholder="example@example.com"
-        id="email"
-        name="email"
-        value={data.email}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`block rounded-md bg-primary/10 p-3 text-primary ${
-          errors.email ? "border-red-500" : "border-transparent"
-        }`}
-      />
-      {dirty.email && errors.email && (
-        <p className="text-red-500">{errors.email}</p>
-      )}
-
-      {/* Campo de contraseña */}
-      <label
-        htmlFor="password"
-        className="block text-lg font-semibold text-quinary"
-      >
-        Password
-      </label>
-      <input
-        type="password"
-        placeholder="********"
-        id="password"
-        name="password"
-        value={data.password}
-        onChange={handleChange}
-        onBlur={handleBlur}
-        className={`block rounded-md bg-primary/10 p-3 text-primary ${
-          errors.password ? "border-red-500" : "border-transparent"
-        }`}
-      />
-      {dirty.password && errors.password && (
-        <p className="text-red-500">{errors.password}</p>
-      )}
-
       {/* Campo de nombre */}
       <label
         htmlFor="name"
@@ -255,10 +226,79 @@ const RegisterForm = () => {
         <p className="text-red-500">{errors.address}</p>
       )}
 
+      {/* Campo de email */}
+      <label
+        htmlFor="email"
+        className="block text-lg font-semibold text-quinary"
+      >
+        Email
+      </label>
+      <input
+        type="email"
+        placeholder="example@example.com"
+        id="email"
+        name="email"
+        value={data.email}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        className={`block rounded-md bg-primary/10 p-3 text-primary ${
+          errors.email ? "border-red-500" : "border-transparent"
+        }`}
+      />
+      {dirty.email && errors.email && (
+        <p className="text-red-500">{errors.email}</p>
+      )}
+
+      {/* Campo de contraseña */}
+      <label
+        htmlFor="password"
+        className="block text-lg font-semibold text-quinary"
+      >
+        Password
+      </label>
+      <input
+        type="password"
+        placeholder="********"
+        id="password"
+        name="password"
+        value={data.password}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        className={`block rounded-md bg-primary/10 p-3 text-primary ${
+          errors.password ? "border-red-500" : "border-transparent"
+        }`}
+      />
+      {dirty.password && errors.password && (
+        <p className="text-red-500">{errors.password}</p>
+      )}
+
+      {/* Campo de confirmar contraseña */}
+      <label
+        htmlFor="confirmPassword"
+        className="block text-lg font-semibold text-quinary"
+      >
+        Confirm Password
+      </label>
+      <input
+        type="password"
+        placeholder="********"
+        id="confirmPassword"
+        name="confirmPassword"
+        value={data.confirmPassword}
+        onChange={handleChange}
+        onBlur={handleBlur}
+        className={`block rounded-md bg-primary/10 p-3 text-primary ${
+          errors.confirmPassword ? "border-red-500" : "border-transparent"
+        }`}
+      />
+      {dirty.confirmPassword && errors.confirmPassword && (
+        <p className="text-red-500">{errors.confirmPassword}</p>
+      )}
+
       {/* Botón de registro */}
       <button
         className="relative z-10 mt-10 rounded border-2 border-primary bg-primary px-4 py-2 font-bold text-secondary transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-secondary hover:text-primary active:scale-100"
-        onClick={handleSubmit} // Usamos onClick aquí para el botón regular
+        onClick={handleSubmit}
       >
         Register
       </button>
