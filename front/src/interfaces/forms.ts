@@ -26,6 +26,7 @@ export interface IRegisterSubmitData {
   address: string;
   email: string;
   password: string;
+  confirmPassword: string;
   phone: string;
   name: string;
   userId?: number;
