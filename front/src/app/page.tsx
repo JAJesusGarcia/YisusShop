@@ -45,9 +45,10 @@ const Page = async () => {
     console.error("Error in page component:", error);
     // Renderizo un mensaje de error en caso de que algo salga mal
     return (
-      <div>
-        Lo sentimos, ha ocurrido un error al cargar los productos. Por favor,
-        inténtelo de nuevo más tarde.
+      // eslint-disable-next-line tailwindcss/enforces-shorthand
+      <div className="mb-10 mt-10 h-full p-5">
+        We are sorry, an error occurred while loading the products. Please,
+        Please try again later.
       </div>
     );
   }
