@@ -47,7 +47,7 @@ const Page = async () => {
     // Renderizo un mensaje de error en caso de que algo salga mal
     return (
       // eslint-disable-next-line tailwindcss/enforces-shorthand
-      <div className="mb-10 mt-10 h-full p-5">
+      <div className="mb-10 mt-10 h-full p-5 text-center">
         We are sorry, an error occurred while loading the products. Please,
         Please try again later.
       </div>
