@@ -87,29 +87,12 @@ const Cart = () => {
           id: json.id,
           date: json.date,
         } as IOrder);
-
-        // Alerta exitosa!
-        // MySwal.fire({
-        //   title: "Order placed successfully!",
-        //   icon: "success",
-        //   backdrop: true,
-        //   toast: true,
-        //   position: "center",
-        //   confirmButtonText: "OK",
-        // });
-        showAlert("Order placed successfully!", "success");
+        showAlert("Order placed successfully!", "success", () => {
+          router.push("/");
+        });
       })
       .catch((error) => {
         console.error("Error placing order:", error);
-        // Alerta de error!
-        // MySwal.fire({
-        //   title: "There was an error placing your order. Please try again.",
-        //   icon: "error",
-        //   backdrop: true,
-        //   toast: true,
-        //   position: "center",
-        //   confirmButtonText: "OK",
-        // });
         showAlert(
           "There was an error placing your order. Please try again.",
           "error",
@@ -129,16 +112,20 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         removeFromCart(productId); // Solo eliminar si el usuario confirma
-        // MySwal.fire({
-        //   title: "Removed!",
-        //   text: `${productName} has been removed from your cart.`,
-        //   icon: "success",
-        //   backdrop: true,
-        //   toast: true,
-        //   position: "center",
-        //   confirmButtonText: "OK",
-        // });
-        showAlert(`${productName} has been removed from your cart.`, "success");
+        setTimeout(() => {
+          if (cart.length === 1) {
+            showAlert(
+              `${productName} has been removed from your cart.`,
+              "success",
+              () => router.push("/"),
+            );
+          } else {
+            showAlert(
+              `${productName} has been removed from your cart.`,
+              "success",
+            );
+          }
+        }, 0);
       }
     });
   };
@@ -155,16 +142,9 @@ const Cart = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         clearCart();
-        // MySwal.fire({
-        //   title: "Cleared!",
-        //   text: "Your cart has been cleared.",
-        //   icon: "success",
-        //   backdrop: true,
-        //   toast: true,
-        //   position: "center",
-        //   confirmButtonText: "OK",
-        // });
-        showAlert("Your cart has been cleared.", "success");
+        showAlert("Your cart has been cleared.", "success", () => {
+          router.push("/");
+        });
       }
     });
   };

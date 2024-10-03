@@ -51,7 +51,7 @@ const UserWidget: React.FC = () => {
         >
           <BiShoppingBag size={24} />
           {cart.length > 0 && (
-            <span className="absolute -right-2 -top-2 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+            <span className="absolute -right-2 -top-2 flex size-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
               {cart.length}
             </span>
           )}
@@ -59,7 +59,7 @@ const UserWidget: React.FC = () => {
       </div>
       <Link
         className="text-quinary transition-colors duration-500 hover:text-primary"
-        href="/heart"
+        href="/favorites"
       >
         <Heart size={24} />
       </Link>

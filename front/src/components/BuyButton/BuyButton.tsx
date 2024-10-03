@@ -41,6 +41,7 @@ const BuyButton = ({ product }: BuyButtonProps) => {
         if (callback) {
           callback();
         }
+        router.push("/products");
       },
     });
   };
