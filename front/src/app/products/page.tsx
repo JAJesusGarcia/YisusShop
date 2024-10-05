@@ -3,6 +3,7 @@ import CardList from "@/components/CardList/CardList";
 import CardProducts from "@/components/CardProducts/CardProducts";
 import { IProduct } from "../interfaces/products";
 import { getProductsService } from "@/services/productsService";
+import CardProducts404 from "@/components/CardProducts404/CardProducts404";
 
 const page = async () => {
   try {
@@ -26,11 +27,9 @@ const page = async () => {
   } catch (error) {
     console.error("Error in page component:", error);
 
-    // mensaje de error en caso que algo salga mal
     return (
-      <div className="mb-10 mt-10 h-full p-5 text-center">
-        We are sorry, an error occurred while loading the products. Please,
-        Please try again later.
+      <div className="container">
+        <CardProducts404 />
       </div>
     );
   }

@@ -4,6 +4,7 @@ import CardList from "@/components/CardList/CardList";
 import Hero from "@/components/Hero/Hero";
 import { IProduct } from "./interfaces/products";
 import { getProductsService } from "@/services/productsService";
+import Card404 from "@/components/Card404/Card404";
 
 const Page = async () => {
   try {
@@ -45,11 +46,13 @@ const Page = async () => {
     console.error("Error in page component:", error);
     // Renderizo un mensaje de error en caso de que algo salga mal
     return (
-      // eslint-disable-next-line tailwindcss/enforces-shorthand
-      <div className="mb-10 mt-10 h-full p-5 text-center">
-        We are sorry, an error occurred while loading the products. Please,
-        Please try again later.
-      </div>
+      <>
+        <Hero />
+        <main className="container">
+          <Card404 />
+          <CardBlog />
+        </main>
+      </>
     );
   }
 };
