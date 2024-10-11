@@ -183,7 +183,7 @@ export default function LoginForm() {
         className="relative z-10 mt-10 rounded border-2 border-primary bg-primary px-4 py-2 font-bold text-secondary transition-all duration-300 hover:scale-105 hover:border-primary hover:bg-secondary hover:text-primary active:scale-100"
         type="submit"
       >
-        Iniciar sesión
+        Login
       </button>
 
       <Link
