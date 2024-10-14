@@ -77,7 +77,7 @@ export default function LoginForm() {
 
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
-      showAlert("Por favor, corrige los errores en el formulario", "error");
+      showAlert("Please correct the errors in the form", "error");
       return;
     }
 
@@ -90,18 +90,18 @@ export default function LoginForm() {
       const response = await loginService(apiUrl + "/users/login", data);
 
       if (response.login) {
-        showAlert("¡Inicio de sesión exitoso!", "success", () => {
+        showAlert("Successful login!", "success", () => {
           setUser(response);
           router.push("/");
           localStorage.removeItem("previousPath");
         });
       } else {
-        showAlert(response.message || "Email o contraseña inválidos", "error");
+        showAlert(response.message || "Invalid email or password", "error");
       }
     } catch (error) {
-      console.error("Error de inicio de sesión:", error);
+      console.error("Login error:", error);
       showAlert(
-        "Ocurrió un error durante el inicio de sesión. Por favor, intenta de nuevo más tarde.",
+        "An error occurred during login. Please try again later.",
         "error",
       );
     } finally {
@@ -141,7 +141,7 @@ export default function LoginForm() {
       </label>
       <input
         type="email"
-        placeholder="ejemplo@ejemplo.com"
+        placeholder="example@ejemplo.com"
         id="email"
         name="email"
         value={data.email}
@@ -190,7 +190,7 @@ export default function LoginForm() {
         className="mt-4 text-center text-sm text-primary transition-colors hover:text-primary/70"
         href="/register"
       >
-        ¿No tienes una cuenta?
+        Do not have an account?
       </Link>
     </form>
   );

@@ -92,13 +92,13 @@ const RegisterForm = () => {
     // Verificar si hay errores
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
-      showAlert("Por favor, corrige los errores en el formulario", "error");
+      showAlert("Please correct the errors in the form", "error");
       return;
     }
 
     // Verificar si las contraseñas coinciden
     if (data.password !== data.confirmPassword) {
-      showAlert("Las contraseñas no coinciden", "error");
+      showAlert("Passwords do not match", "error");
       return;
     }
 
@@ -113,19 +113,19 @@ const RegisterForm = () => {
       console.log(response);
 
       if (!response.register) {
-        showAlert("¡Te has registrado exitosamente!", "success", () => {
+        showAlert("You have successfully registered", "success", () => {
           router.push("/login");
         });
       } else {
         showAlert(
-          response.message || "El registro falló. Por favor, intenta de nuevo.",
+          response.message || "Registration failed. Please try again.",
           "error",
         );
       }
     } catch (error) {
-      console.error("Error de registro:", error);
+      console.error("Registration error:", error);
       showAlert(
-        "Ocurrió un error durante el registro. Por favor, intenta de nuevo más tarde.",
+        "An error occurred during registration. Please try again later.",
         "error",
       );
     }
@@ -146,9 +146,7 @@ const RegisterForm = () => {
       email: validateEmail(data.email),
       password: validatePassword(data.password),
       confirmPassword:
-        data.password !== data.confirmPassword
-          ? "Las contraseñas no coinciden"
-          : "",
+        data.password !== data.confirmPassword ? "Passwords do not match" : "",
       name: validateName(data.name),
       phone: validatePhone(data.phone),
       address: validateAddress(data.address),
