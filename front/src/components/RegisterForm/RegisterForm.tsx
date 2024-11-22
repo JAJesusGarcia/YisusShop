@@ -8,7 +8,7 @@ import {
   validateName,
 } from "../../helpers/validation";
 import { IRegisterFormData, IRegisterSubmitData } from "../../interfaces/forms";
-import { registerService } from "@/services/authServices";
+import { checkEmailExists, registerService } from "@/services/authServices";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -26,28 +26,6 @@ interface DirtyState {
 
 const RegisterForm = () => {
   const router = useRouter();
-
-  // Estados iniciales para el formulario
-  const initialData: IRegisterFormData = {
-    email: "",
-    password: "",
-    confirmPassword: "",
-    address: "",
-    phone: "",
-    name: "",
-  };
-
-  // Estados para manejar datos del formulario, errores y campos tocados
-  const [data, setData] = useState<IRegisterFormData>(initialData);
-  const [errors, setErrors] = useState<IRegisterFormData>(initialData);
-  const [dirty, setDirty] = useState<DirtyState>({
-    email: false,
-    password: false,
-    confirmPassword: false,
-    address: false,
-    phone: false,
-    name: false,
-  });
 
   const showAlert = (
     message: string,
@@ -74,6 +52,28 @@ const RegisterForm = () => {
     });
   };
 
+  // Estados iniciales para el formulario
+  const initialData: IRegisterFormData = {
+    email: "",
+    password: "",
+    confirmPassword: "",
+    address: "",
+    phone: "",
+    name: "",
+  };
+
+  // Estados para manejar datos del formulario, errores y campos tocados
+  const [data, setData] = useState<IRegisterFormData>(initialData);
+  const [errors, setErrors] = useState<IRegisterFormData>(initialData);
+  const [dirty, setDirty] = useState<DirtyState>({
+    email: false,
+    password: false,
+    confirmPassword: false,
+    address: false,
+    phone: false,
+    name: false,
+  });
+
   // Envío del formulario
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -92,17 +92,48 @@ const RegisterForm = () => {
     // Verificar si hay errores
     const hasErrors = Object.values(errors).some((error) => error !== "");
     if (hasErrors) {
-      showAlert("Please correct the errors in the form", "error");
+      showAlert("Por favor, corrige los errores en el formulario", "error");
       return;
     }
 
     // Verificar si las contraseñas coinciden
     if (data.password !== data.confirmPassword) {
-      showAlert("Passwords do not match", "error");
+      showAlert("Las contraseñas no coinciden", "error");
       return;
     }
 
-    // Envío del formulario si no hay errores
+    // Validar la URL de la API
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+    if (!apiUrl) {
+      console.error("La URL de la API no está configurada.");
+      showAlert(
+        "Hubo un error interno. Por favor, intenta más tarde.",
+        "error",
+      );
+      return;
+    }
+
+    // Verificar si el correo ya existe
+    try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+      const emailExists = await checkEmailExists(apiUrl!, data);
+
+      if (emailExists) {
+        showAlert(
+          "El correo ya está registrado. Por favor, intenta con otro.",
+          "error",
+        );
+        return;
+      }
+    } catch (error) {
+      console.error("Error al verificar el correo:", error);
+      showAlert(
+        "Ocurrio un error al verificar el correo. Por favor, intenta mas tarde.",
+        "error",
+      );
+      return;
+    }
+
     try {
       const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const { confirmPassword, ...submitData } = data;
@@ -113,19 +144,19 @@ const RegisterForm = () => {
       console.log(response);
 
       if (!response.register) {
-        showAlert("You have successfully registered", "success", () => {
+        showAlert("¡Te has registrado exitosamente!", "success", () => {
           router.push("/login");
         });
       } else {
         showAlert(
-          response.message || "Registration failed. Please try again.",
+          response.message || "El registro falló. Por favor, intenta de nuevo.",
           "error",
         );
       }
     } catch (error) {
-      console.error("Registration error:", error);
+      console.error("Error de registro:", error);
       showAlert(
-        "An error occurred during registration. Please try again later.",
+        "Ocurrió un error durante el registro. Por favor, intenta de nuevo más tarde.",
         "error",
       );
     }
@@ -146,7 +177,9 @@ const RegisterForm = () => {
       email: validateEmail(data.email),
       password: validatePassword(data.password),
       confirmPassword:
-        data.password !== data.confirmPassword ? "Passwords do not match" : "",
+        data.password !== data.confirmPassword
+          ? "Las contraseñas no coinciden"
+          : "",
       name: validateName(data.name),
       phone: validatePhone(data.phone),
       address: validateAddress(data.address),
